@@ -29,7 +29,7 @@ namespace CreatringCharacters.Abilities
 
                 if (isTrue == true)
                 {
-                    cC.SimpleMove(Camera.main.transform.forward * dashForce);
+                    cC.SimpleMove(transform.forward * dashForce);
                 }
             }
             

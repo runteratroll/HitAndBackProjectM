@@ -6,12 +6,12 @@ public class DevilBulldogAttack : EnemyAttack
 {
 
     DevilBulldogAnimation anim;
-    protected AttackCollider attackCol; 
+    public AttackCollider attackCol; 
     protected override void Awake()
     {
         base.Awake();
         anim = GetComponent<DevilBulldogAnimation>();
-        attackCol = GetComponentInChildren<AttackCollider>(); //gameObject가 널이라서 그런가보다
+        //attackCol = GetComponentInChildren<AttackCollider>(); //gameObject가 널이라서 그런가보다
 
     }
 

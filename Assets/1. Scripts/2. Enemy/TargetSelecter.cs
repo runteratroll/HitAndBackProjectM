@@ -14,7 +14,7 @@ public class TargetSelecter : MonoBehaviour
     //플레이어한테 줘야겠다.
 
     private CharacterController character;
-
+    public Player player;
 
     private void Start()
     {
@@ -26,14 +26,17 @@ public class TargetSelecter : MonoBehaviour
     private void Update()
     {
 
-
-        
-
-
-        if(isTrue)
+        if (player.CanUseChargedAttack() == true)
         {
-            character.SimpleMove(forceDirection * forceSize);
+
+            if (isTrue)
+            {
+                character.SimpleMove(forceDirection * forceSize);
+            }
         }
+           
+
+
 
 
     }

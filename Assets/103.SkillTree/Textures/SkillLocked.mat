@@ -8,8 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SkillLocked
-  m_Shader: {fileID: -6465566751694194690, guid: 7dba7dab4bac61e4aba4a648ba91a037,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 7dba7dab4bac61e4aba4a648ba91a037, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -38,5 +37,6 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_BBB12B76: 10
-    - _Alpha: 0.303
+    - _Alpha: 0.354
     m_Colors: []
+  m_BuildTextureStacks: []

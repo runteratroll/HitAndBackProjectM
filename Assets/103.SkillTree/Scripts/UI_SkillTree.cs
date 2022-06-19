@@ -60,7 +60,9 @@ public class UI_SkillTree : MonoBehaviour {
     }
 
     private void UpdateVisuals() {
+        
         foreach (SkillButton skillButton in skillButtonList) {
+            Debug.Log("비주얼업데이트실행?");
             skillButton.UpdateVisual();
         }
 
@@ -104,8 +106,8 @@ public class UI_SkillTree : MonoBehaviour {
             this.skillUnlockableMaterial = skillUnlockableMaterial;
 
             //각 버튼을 이렇게만들수 있구나!
-            image = transform.Find("image").GetComponent<Image>();
-            backgroundImage = transform.Find("background").GetComponent<Image>();
+            image = transform.Find("Image").GetComponent<Image>();
+            backgroundImage = transform.Find("BackGround").GetComponent<Image>();
 
 
             //버튼을 눌렀을때
@@ -127,18 +129,20 @@ public class UI_SkillTree : MonoBehaviour {
             //구조화를 시키는 구나
             //이미 스킬이 언락됬다면 
             if (playerSkills.IsSkillUnlocked(skillType)) {
-                image.material = null;
-                backgroundImage.material = null;
+                //image.material = null;
+                //backgroundImage.material = null;
+                backgroundImage.color = new Color(1f, 1f ,1f,1f);
+                //backgroundImage.material = null;
             } else {
                 if (playerSkills.CanUnlock(skillType)) {
                     //언락이 가능하다면
-                    image.material = skillUnlockableMaterial;
+                    //image.material = skillUnlockableMaterial;
                     backgroundImage.color = UtilsClass.GetColorFromString("4B677D");
                     transform.GetComponent<Button_UI>().enabled = true;
                     //언락이 
                 } else {
-                    image.material = skillLockedMaterial; //이미지가 잠긴걸론
-                    backgroundImage.color = new Color(.3f, .3f, .3f);
+                    //image.material = skillLockedMaterial; //이미지가 잠긴걸론
+                    backgroundImage.color = new Color(.3f, .3f, .3f , 0.3f);
                     transform.GetComponent<Button_UI>().enabled = false;
                     //더이상 누를수 없게 
                 }

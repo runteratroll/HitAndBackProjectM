@@ -5,7 +5,7 @@ using UnityEngine;
 public class DevilBulldogHealth : Health
 {
     SkinnedMeshRenderer skinnedMeshRenderer;
-
+    public Player player;
     public HealthBar healthBar;
     private void Awake()
     {
@@ -22,6 +22,7 @@ public class DevilBulldogHealth : Health
     {
         Debug.Log("데미지 받음");
         ColorSet();
+        player.PlayerSkillsAddUp();
         base.HealthDown(damage, hitPoint, normal, power);
         healthBar.SetHealth((float)currentHp / (float)maxHp);
 

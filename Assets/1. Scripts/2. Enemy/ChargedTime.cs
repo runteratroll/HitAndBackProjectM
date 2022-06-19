@@ -10,6 +10,7 @@ public class ChargedTime : MonoBehaviour
 
     PlayerMove playerMove;
     PlayerAnimation playerAnimation;
+    public Player player;
 
     private void Awake()
     {
@@ -19,7 +20,12 @@ public class ChargedTime : MonoBehaviour
 
     private void Update()
     {
-        Timer();
+
+        if (player.CanUseChargedAttack() == true)
+        {
+            Timer();
+        }
+       
     }
 
     private void OnGUI()

@@ -39,11 +39,11 @@ public class EnemyAiTutorial : MonoBehaviour
     private void Update()
     {
         //Check for sight and attack range
-        if(alreadyAttacked == true) //공격중이라면
+        if (alreadyAttacked == true) //공격중이라면
         {
             return;
         }
-    
+
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
@@ -64,7 +64,7 @@ public class EnemyAiTutorial : MonoBehaviour
         }
 
 
-        Vector3 distanceToWalkPoint = walkPoint -  transform.position;
+        Vector3 distanceToWalkPoint = walkPoint - transform.position;
 
         //Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1f)
@@ -82,8 +82,10 @@ public class EnemyAiTutorial : MonoBehaviour
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+        if (Physics.Raycast(walkPoint + new Vector3(0f, 2f, 0f), -transform.up, 5f, whatIsGround)) //터레인 콜라이더설정과, walkPoint의 y좌표와 레이캐스트이 y좌표가 같아서
         {
+            //충돌이 안됬구나
+            //레이어 설정을 안했구나 ㅇ...
             Debug.Log("아래에서 쏘기 땅에 맞음");
 
             walkPointSet = true;
@@ -98,26 +100,21 @@ public class EnemyAiTutorial : MonoBehaviour
 
     private void AttackPlayer()
     {
+        Debug.Log("움직임 멈춤");
         //Make sure enemy doesn't move
         agent.SetDestination(transform.position);
 
-   
+
         if (!alreadyAttacked)
         {
+            Debug.Log("디버그어택");
             transform.LookAt(player);
-            attacks.isAttack = true;
-            attacks.Attack();
-
+            attacks.Attack(); //애니메이션과 Attack  isAttack실행
             alreadyAttacked = true;
-            //AlreadyAttack(false);
-            //Invoke(nameof(ResetAttack), timeBetweenAttacks);
-            //attack();
+
         }
     }
-    //public void AlreadyAttack(bool value)
-    //{
-    //    alreadyAttacked = value;
-    //}
+
 
     public void AlreadyAttack()
     {
@@ -125,13 +122,6 @@ public class EnemyAiTutorial : MonoBehaviour
     }
 
     //애니메이션으로 정지 모션을 정하자
-    IEnumerable attack()
-    {
-
-
-        yield return new WaitForSeconds(timeBetweenAttacks);
-        alreadyAttacked = false;
-    }
 
     private void ResetAttack()
     {

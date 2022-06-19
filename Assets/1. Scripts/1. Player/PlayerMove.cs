@@ -5,7 +5,9 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
 
-   
+
+    [Header("이동버프")]
+    public float buffSpeed = 1;
 
 
     //캐릭터 중력값
@@ -109,7 +111,10 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
- 
+    public void SetMovementSpeed(float setSpeed)
+    {
+        buffSpeed *= setSpeed;
+    }
 
     private void SetMove()
     {
@@ -145,7 +150,7 @@ public class PlayerMove : MonoBehaviour
 
 
 
-                moveAmount = moveDir.normalized * speed * Time.deltaTime + _vecTemp;
+                moveAmount = (moveDir.normalized * speed * buffSpeed * Time.deltaTime) + _vecTemp;
 
                 collisionFlags = controllerCharacter.Move(moveAmount);// controllerCharacter.Move(moveAmount * Time.deltaTime); //왜 순간이동 한걸까 //SimpleMove맨
             }

@@ -21,13 +21,15 @@ public class Player : MonoBehaviour {
     [SerializeField] private TMPro.TextMeshProUGUI levelText;
 
     //private PlayerSword playerSword;
+    private PlayerMove playerMove;
     private LevelSystem levelSystem;
     private LevelSystemAnimated levelSystemAnimated;
     private PlayerSkills playerSkills;
 
     private void Awake() {
-       // playerSword = GetComponent<PlayerSword>();
-        levelSystem = new LevelSystem();
+        // playerSword = GetComponent<PlayerSword>();
+        playerMove = GetComponentInParent<PlayerMove>();
+         levelSystem = new LevelSystem();
         levelSystemAnimated = new LevelSystemAnimated(levelSystem);
         playerSkills = new PlayerSkills();
         playerSkills.OnSkillUnlocked += PlayerSkills_OnSkillUnlocked;
@@ -46,13 +48,13 @@ public class Player : MonoBehaviour {
             case PlayerSkills.SkillType.Parring:
                 break;
             case PlayerSkills.SkillType.MoveSpeed_1:
-                SetMovementSpeed(50);
+                SetMovementSpeed(1.2f); //1.2배
                 break;
             case PlayerSkills.SkillType.MoveSpeed_2:
-                SetMovementSpeed(120);
+                SetMovementSpeed(1.7f); //1.7배
                 break;
             case PlayerSkills.SkillType.AttackSpeed_1:
-                SetAttackSpeed(30);
+                SetAttackSpeed(30); //공격애니메이션을 빠르게
                 break;
             case PlayerSkills.SkillType.AttackSpeed_2:
                 SetAttackSpeed(120);
@@ -72,6 +74,12 @@ public class Player : MonoBehaviour {
 
     public PlayerSkills GetPlayerSkills() {
         return playerSkills;
+    }
+
+
+    public void PlayerSkillsAddUp()
+    {
+        playerSkills.AddSkillPoint();
     }
 
     private void LevelSystemAnimated_OnLevelChanged(object sender, System.EventArgs e) {
@@ -107,7 +115,7 @@ public class Player : MonoBehaviour {
     public void SetMovementSpeed(float setSpeed)
     {
         //플레이어무브를 담아와서 스피드에다가 곱하는 함수
-        //playerSword.SetMoventSpeed(setSpeed)를 할거임
+        playerMove.SetMovementSpeed(setSpeed);
         //그럼 플레이어무브에는 speed말고 speed에 곱해주는 함수를 하나 만들자 
     }
 
