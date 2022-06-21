@@ -18,28 +18,26 @@ using CodeMonkey.Utils;
 
 public class LevelWindow : MonoBehaviour {
 
-    private Text levelText;
+    public Text levelText;
     private Image experienceBarImage;
     private LevelSystem levelSystem;
     //상대의 레퍼런스를 매개변수로 받아가지고 디커플링을 했구나
     private LevelSystemAnimated levelSystemAnimated;
 
     private void Awake() {
-        levelText = transform.Find("levelText").GetComponent<Text>();
+        //levelText = transform.Find("levelText").GetComponent<Text>();
         experienceBarImage = transform.Find("experienceBar").Find("bar").GetComponent<Image>();
         
         Debug.Log("experin"  + experienceBarImage);
-        //transform.Find("experience5Btn").GetComponent<Button_UI>().ClickFunc = () => levelSystem.AddExperience(5);
-        //transform.Find("experience50Btn").GetComponent<Button_UI>().ClickFunc = () => levelSystem.AddExperience(50);
-        //transform.Find("experience500Btn").GetComponent<Button_UI>().ClickFunc = () => levelSystem.AddExperience(500);
+
     }
 
-    private void SetExperienceBarSize(float experienceNormalized) {
+    public void SetExperienceBarSize(float experienceNormalized) {
         Debug.Log("되겠지?");
         experienceBarImage.fillAmount = experienceNormalized;
     }
 
-    private void SetLevelNumber(int levelNumber) {
+    public void SetLevelNumber(int levelNumber) {
         levelText.text = "LEVEL\n" + (levelNumber + 1);
     }
 
@@ -49,12 +47,7 @@ public class LevelWindow : MonoBehaviour {
 
     //매개변수를 활용한 초기화 좋네
 
-    public LevelWindow(LevelSystemAnimated levelSystemAnimated)
-    {
-      
-        SetLevelSystemAnimated(levelSystemAnimated);
-
-    }
+   
     public void SetLevelSystemAnimated(LevelSystemAnimated levelSystemAnimated) {
         // Set the LevelSystemAnimated object
         this.levelSystemAnimated = levelSystemAnimated;

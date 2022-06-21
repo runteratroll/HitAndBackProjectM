@@ -34,6 +34,7 @@ public class SoundManager : MonoBehaviour {
     //이걸 이제 빠르게 만들어야하는
 
     public void PlaySE(string _soundName) {
+        //와 이거최적화 해야겠는걸? 이진탐색트리로?
         for (int i = 0; i < sfxSounds.Length; i++) {
             if (_soundName == sfxSounds[i].soundName) {//재생중이지 않은 플레이어를 찾아야됨
                 for (int x = 0; x < sfxPlayer.Length; x++) {

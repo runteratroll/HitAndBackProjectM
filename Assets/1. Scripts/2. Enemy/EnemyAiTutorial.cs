@@ -60,6 +60,7 @@ public class EnemyAiTutorial : MonoBehaviour
         if (walkPointSet)
         {
             Debug.Log("움직이기");
+            //SoundManager.instance.PlaySE("EnemyBulldogWalk");
             agent.SetDestination(walkPoint);
         }
 

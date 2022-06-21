@@ -20,7 +20,9 @@ public class ComboAttack : MonoBehaviour
     {
         if(comboStep == 0)
         {
+            SoundManager.instance.PlaySE("HammerS");
             playerANim.Play("AttackA");//퍼스트 어택
+            
             comboStep = 1;
             return;
         }
@@ -46,12 +48,18 @@ public class ComboAttack : MonoBehaviour
     {
         if(comboStep == 2)
         {
+            SoundManager.instance.PlaySE("HammerM");
             playerANim.Play("AttackB");
+          
 
-           
         }
         if (comboStep == 3)
+        {
+            SoundManager.instance.PlaySE("HammerR");
             playerANim.Play("AttackC");
+        }
+         
+     
     }
 
     public void Comboreset()

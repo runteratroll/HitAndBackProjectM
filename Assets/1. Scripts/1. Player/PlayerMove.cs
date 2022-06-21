@@ -140,10 +140,13 @@ public class PlayerMove : MonoBehaviour
                 {
                     speed = runMoveSpd;
                     state = PlayerState.Run;
+                   // SoundManager.instance.PlaySE("PlayerGrassRun");
+
                 }
                 else
                 {
                     state = PlayerState.Walk;
+                   // SoundManager.instance.PlaySE("PlayerGrassWalk");
                 }
 
                 _vecTemp = new Vector3(0f, verticalSpd, 0f);
@@ -158,6 +161,8 @@ public class PlayerMove : MonoBehaviour
         }
         else
         {
+            horizontal = 0;
+            vertical = 0;
             _vecTemp = new Vector3(0f, verticalSpd, 0f);
             moveAmount += _vecTemp;
             collisionFlags = controllerCharacter.Move(moveAmount * Time.deltaTime);// controllerCharacter.Move(moveAmount * Time.deltaTime); //왜 순간이동 한걸까 //SimpleMove맨
