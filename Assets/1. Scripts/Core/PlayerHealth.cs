@@ -6,7 +6,7 @@ public class PlayerHealth : Health
 {
     private float lastDamageTime;
     public float damageDelay;
-
+    public HealthBar healthBar;
     PlayerMove playerMove;
 
     public float delay;
@@ -25,7 +25,7 @@ public class PlayerHealth : Health
         //여기에서 이제 날라가는 함수를
 
         playerMove.SetHit(normal, power, delay);
-
+        healthBar.SetHealth((float)currentHp / (float)maxHp);
 
     }
 

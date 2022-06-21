@@ -20,10 +20,7 @@ public class UI_SkillTree : MonoBehaviour {
     private TMPro.TextMeshProUGUI skillPointsText;
 
     private void Awake() {
-        //transform.Find("DashBtn").GetComponent<Button_UI>().ClickFunc = () =>
-        //{
-        //    Debug.Log("Click!");
-        //};
+     
         skillPointsText = transform.Find("SkillPointText").GetComponent<TMPro.TextMeshProUGUI>();
     }
 

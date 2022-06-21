@@ -42,8 +42,8 @@ public class LevelSystemAnimated {
         level = levelSystem.GetLevelNumber();
         experience = levelSystem.GetExperience();
 
-        levelSystem.OnExperienceChanged += LevelSystem_OnExperienceChanged;
-        levelSystem.OnLevelChanged += LevelSystem_OnLevelChanged;
+        levelSystem.OnExperienceChanged += LevelSystem_OnExperienceChanged; //경험치가 바뀔때 실행시키는 함수를 넣을떄
+        levelSystem.OnLevelChanged += LevelSystem_OnLevelChanged; // 레벨이 바뀔떄 실행시키는 함수를 넣을때
     }
 
     private void LevelSystem_OnLevelChanged(object sender, System.EventArgs e) {
@@ -55,7 +55,7 @@ public class LevelSystemAnimated {
     }
 
     private void Update() {
-        if (isAnimating) {
+        if (isAnimating) { //특정함수가 발동했을때만 업데이트 시간이 실행되게
             // Check if its time to update
             updateTimer += Time.deltaTime;
             while (updateTimer > updateTimerMax) {
@@ -69,8 +69,9 @@ public class LevelSystemAnimated {
     private void UpdateAddExperience() {
         if (level < levelSystem.GetLevelNumber()) {
             // Local level under target level
-            AddExperience();
+            AddExperience(); //여기에서 실행시킬때 
         } else {
+            //애니메이팅 끝나고 레벨이 같을때인가
             // Local level equals the target level
             if (experience < levelSystem.GetExperience()) {
                 AddExperience();
@@ -85,9 +86,10 @@ public class LevelSystemAnimated {
         if (experience >= levelSystem.GetExperienceToNextLevel(level)) {
             level++;
             experience = 0;
-            if (OnLevelChanged != null) OnLevelChanged(this, EventArgs.Empty);
+            if (OnLevelChanged != null) OnLevelChanged(this, EventArgs.Empty); //함수실행시키는 건가?
         }
-        if (OnExperienceChanged != null) OnExperienceChanged(this, EventArgs.Empty);
+        if (OnExperienceChanged != null) OnExperienceChanged(this, EventArgs.Empty); //건너뛰면 또 애니메이팅함수가 실행되니까 OnLevel_System기능을 넣어듯이
+        //이걸 실행시키면 isAnimating이 트루됨
     }
 
     public int GetLevelNumber() {

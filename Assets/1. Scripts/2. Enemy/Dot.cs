@@ -7,14 +7,14 @@ public class Dot : MonoBehaviour
 {
     public Transform enemy;
     public Transform player;
-    public LineRenderer forwardLine;
+    //public LineRenderer forwardLine;
 
     //public Text isForward;
 
     private void Update()
     {
-        forwardLine.SetPosition(0, enemy.position);
-        forwardLine.SetPosition(1, enemy.forward * 5);
+       // forwardLine.SetPosition(0, enemy.position);
+        //forwardLine.SetPosition(1, enemy.forward * 5);
 
         IsForward();
     }

@@ -46,7 +46,7 @@ public class PlayerMove : MonoBehaviour
     public PlayerAnimation playerAnimation;
 
 
-
+    public LayerMask isGround;
 
     private void Awake()
     {
@@ -65,9 +65,9 @@ public class PlayerMove : MonoBehaviour
     private void Update()
     {
 
-        setGravity();
-        SetMove();
 
+        SetMove();
+        setGravity();
         PlayerSetEnum();
    
 
@@ -192,15 +192,18 @@ public class PlayerMove : MonoBehaviour
     /// <summary>
     ///  캐릭터 중력 설정
     /// </summary>
-    void setGravity()
+    /// 
+    private void OnTriggerEnter(Collider other)
     {
-        //대채왜 0에서 0.1사이를 왔다갔다 하는걸까
-        if (collisionFlags == CollisionFlags.Below)
+        if(other.gameObject.layer == isGround)
         {
-            Debug.Log("여기 통과하니?");
             verticalSpd = 0f;
         }
-        else if ((collisionFlags == CollisionFlags.None))
+    }
+    void setGravity()
+    {
+        
+        if ((collisionFlags == CollisionFlags.None))
         {
             Debug.Log("중력 값 적용");
 

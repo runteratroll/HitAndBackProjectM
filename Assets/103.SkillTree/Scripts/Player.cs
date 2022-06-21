@@ -25,6 +25,7 @@ public class Player : MonoBehaviour {
     private LevelSystem levelSystem;
     private LevelSystemAnimated levelSystemAnimated;
     private PlayerSkills playerSkills;
+    private LevelWindow levelWindow;
 
     private void Awake() {
         // playerSword = GetComponent<PlayerSword>();
@@ -32,6 +33,8 @@ public class Player : MonoBehaviour {
          levelSystem = new LevelSystem();
         levelSystemAnimated = new LevelSystemAnimated(levelSystem);
         playerSkills = new PlayerSkills();
+        levelWindow = new LevelWindow(levelSystemAnimated); //이거면 이제 설정해주겠지?
+
         playerSkills.OnSkillUnlocked += PlayerSkills_OnSkillUnlocked;
     }
 
@@ -90,7 +93,7 @@ public class Player : MonoBehaviour {
     }
 
     private void LevelSystemAnimated_OnExperienceChanged(object sender, System.EventArgs e) {
-       // experienceBar.SetSize(levelSystemAnimated.GetExperienceNormalized());
+      // experienceBar.SetSize(levelSystemAnimated.GetExperienceNormalized());
     }
 
     private void PlayerSword_OnEnemyKilled(object sender, System.EventArgs e) {

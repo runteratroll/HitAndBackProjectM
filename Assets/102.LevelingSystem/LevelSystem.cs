@@ -41,6 +41,7 @@ public class LevelSystem {
                 //확실히 비용이 넘을떄 빼면은 되는구나 레벨만 올리면 되지 나머지는 로직이
                 //똑같아야 하니까 비용이 넘을땐 뺴기를 습득
                 experience -= GetExperienceToNextLevel(level);
+                //다음으로가는 레벨만큼 experience를 빼준다.
                 //기능하는 내용이 똑같으면 역할만 달라질뿐 로직은 같네, 이걸 이용해야겠다.
                 level++;
                 if (OnLevelChanged != null) OnLevelChanged(this, EventArgs.Empty); 

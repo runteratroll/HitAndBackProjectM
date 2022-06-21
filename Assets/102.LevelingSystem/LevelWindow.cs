@@ -28,12 +28,14 @@ public class LevelWindow : MonoBehaviour {
         levelText = transform.Find("levelText").GetComponent<Text>();
         experienceBarImage = transform.Find("experienceBar").Find("bar").GetComponent<Image>();
         
-        transform.Find("experience5Btn").GetComponent<Button_UI>().ClickFunc = () => levelSystem.AddExperience(5);
-        transform.Find("experience50Btn").GetComponent<Button_UI>().ClickFunc = () => levelSystem.AddExperience(50);
-        transform.Find("experience500Btn").GetComponent<Button_UI>().ClickFunc = () => levelSystem.AddExperience(500);
+        Debug.Log("experin"  + experienceBarImage);
+        //transform.Find("experience5Btn").GetComponent<Button_UI>().ClickFunc = () => levelSystem.AddExperience(5);
+        //transform.Find("experience50Btn").GetComponent<Button_UI>().ClickFunc = () => levelSystem.AddExperience(50);
+        //transform.Find("experience500Btn").GetComponent<Button_UI>().ClickFunc = () => levelSystem.AddExperience(500);
     }
 
     private void SetExperienceBarSize(float experienceNormalized) {
+        Debug.Log("되겠지?");
         experienceBarImage.fillAmount = experienceNormalized;
     }
 
@@ -47,6 +49,12 @@ public class LevelWindow : MonoBehaviour {
 
     //매개변수를 활용한 초기화 좋네
 
+    public LevelWindow(LevelSystemAnimated levelSystemAnimated)
+    {
+      
+        SetLevelSystemAnimated(levelSystemAnimated);
+
+    }
     public void SetLevelSystemAnimated(LevelSystemAnimated levelSystemAnimated) {
         // Set the LevelSystemAnimated object
         this.levelSystemAnimated = levelSystemAnimated;
