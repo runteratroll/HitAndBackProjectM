@@ -9,13 +9,19 @@ public abstract class Health : MonoBehaviour, IDamageble
     public int currentHp;
     public int maxHp;
 
-
+    public Color hitColor;
     private void Start()
     {
         currentHp = maxHp;
     }
     public virtual void HealthDown(int damage, Vector2 hitPoint, Vector2 normal, float power) //왜 protected는 안될까
     {
+
+        BloodParticle hitParticle = PoolManager.GetItem<BloodParticle>(); //이름도 좋은거 같은데
+        hitParticle.SetParticleColor(hitColor);
+        hitParticle.SetRotation(normal);
+        hitParticle.Play(hitPoint);
+
         currentHp -= damage; //피가 깍이고 튕기는것도 적마다 다를것같은데 해야되나
 
         //피격 파티클은 여기서 재생

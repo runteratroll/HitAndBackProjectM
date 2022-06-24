@@ -1,219 +1,73 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-#if UNITY_EDITOR
-using UnityEditor;
+public class PoolManager
+{
+    public static Dictionary<string, object> pool = new Dictionary<string, object>();
+    public static Dictionary<string, GameObject> prefabDictionary = new Dictionary<string, GameObject>();
 
-[CustomEditor(typeof(PoolManager))]
-public class ObjectPoolerEditor : Editor {
-	const string INFO = "Ç®¸µÇÑ ¿ÀºêÁ§Æ®¿¡ ´ÙÀ½À» ÀûÀ¸¼¼¿ä \nvoid OnDisable()\n{\n" +
-		"    ObjectPooler.ReturnToPool(gameObject);    // ÇÑ °´Ã¼¿¡ ÇÑ¹ø¸¸ \n" +
-		"    CancelInvoke();    // Monobehaviour¿¡ Invoke°¡ ÀÖ´Ù¸é \n}";
+    //í’€ì„ í•˜ë‚˜ ìƒˆë¡œ ë§Œë“œëŠ” í•¨ìˆ˜ AfterImage, Bullet, Projectile
+    public static void CreatePool<T>(GameObject prefab, Transform parent, int count = 5)
+    {
+        // ì–´ë–¤ í”„ë¦¬íŒ¹ë“¤ë¡œ í’€ì„ ë§Œë“¤êº¼ëƒ? í•´ë‹¹ í”„ë¦¬íŒ¹ë“¤ì„ ëˆ„êµ¬ì˜ ìì‹ìœ¼ë¡œ? ëª‡ê°œë‚˜ ë§Œë“¤êº¼ëƒ?
+        Queue<T> q = new Queue<T>();
+        //í’€ì€ íë¡œ êµ¬í˜„í• êº¼ì•¼. ì§€ì •í•œ Tíƒ€ì…ì˜ íë¥¼ ë§Œë“œëŠ”ê±°
+        for(int i = 0; i < count; i++){
+            //í•´ë‹¹ íì— prefabì„ ì§€ì •í•œ ê°¯ìˆ˜ë§Œí¼ ë§Œë“¤ì–´ì„œ ë„£ì–´ì¤€ë‹¤.
+            GameObject g = GameObject.Instantiate(prefab, parent);
+            
+            T t = g.GetComponent<T>();
+            g.SetActive(false);
+            //ë§Œë“¤ì–´ì§„ ê²Œì„ì˜¤ë¸Œì íŠ¸ëŠ” ì§€ê¸ˆë‹¹ì¥ ì“¸ê²Œ ì•„ë‹ˆê¸° ë•Œë¬¸ì— active falseë¡œ í•´ë†“ëŠ”ë‹¤.
+            q.Enqueue(t);
+        }
 
-	public override void OnInspectorGUI() {
-		EditorGUILayout.HelpBox(INFO, MessageType.Info);
-		base.OnInspectorGUI();
-	}
-}
-#endif
+        //Type type = typeof(T);
+        
+        string key = typeof(T).ToString(); 
+        //ì´ keyì—ëŠ” "AfterImage"
+        pool.Add(key, q);
+        //ë”•ì…”ë„ˆë¦¬ì— "AfterImage"ë¼ëŠ” í‚¤ ê°’ìœ¼ë¡œ Queue<AfterImage>ë¥¼ ì¶”ê°€í•œë‹¤.
+        prefabDictionary.Add(key, prefab);
+        //ê·¸ë¦¬ê³  ì¶”ê°€ì ìœ¼ë¡œ ë” ë§Œë“¤ ìˆ˜ë„ ìˆìœ¼ë‹ˆ prefabë„ ì €ì¥í•´ ë‘”ë‹¤.
+    }
 
-public class PoolManager : MonoBehaviour {
-	public static PoolManager inst;
-	void Awake() => inst = this;
-	//inst°¡ publicÀÌ ¾Æ´Ï±â¿¡ ¿ÜºÎ¿¡¼­ Á¢¸øÇÔ
-	[Serializable]
-	public class Pool {
-		public string tag;
-		public GameObject prefab;
-		public int size;
-	}
+    //ê·¸ë ‡ê²Œ ë§Œë“¤ì–´ì§„ í’€ì—ì„œ ì›í•˜ëŠ” ê±¸ ì°¾ì•„ì˜¤ëŠ” ì½”ë“œë‹¤.
+    public static T GetItem<T>() where T : MonoBehaviour
+    {
+        //ë§Œì•½ Të¥¼ AfterImage ì°¾ì•„ì˜¤ëŠ” ê±¸ë¡œ ê°€ì •í•˜ê³  ì„¤ëª…í•´ë³´ì
+        string key = typeof(T).ToString();
+        //Tì—ì„œ "AfterImage"ë¼ëŠ” ë¬¸ìì—´ì„ ë½‘ì•„ë‚´ê¸° ìœ„í•´ì„œ Typeì„ ê°€ì ¸ì™€ì„œ ToStringìœ¼ë¡œ ë¬¸ìì—´ì„ ë½‘ëŠ”ë‹¤.
+        T item = null;
+        //ê·¸ë‹¤ìŒì— ëŒë ¤ì¤„ itemì„ ë§Œë“¤ì–´ì£¼ê³  nullë¡œ ì´ˆê¸°í™” í•œë‹¤.
 
+        if(pool.ContainsKey(key)){
+            //í’€ì— í•´ë‹¹í•˜ëŠ” keyê°€ ì¡´ì¬í•˜ë©´ 
+            Queue<T> q = (Queue<T>)pool[key];
+            //í’€ ë”•ì…”ë„ˆë¦¬ì—ì„œ í•´ë‹¹ í‚¤ë¡œ Queue<AfterImage> ë¥¼ ê°€ì ¸ì˜¨ë‹¤. ì´ë•Œ object ì´ë¯€ë¡œ í˜•ë³€í™˜í•œë‹¤.
+            T firstItem = q.Peek();
+            // íì˜ ì²«ë²ˆì§¸ ì•„ì´í…œì„ ì‚´í´ë³´ê¸°ìœ„í•´ Peekì„ ì¨ì„œ ê°€ì ¸ì˜¤ê³ (ì´ë•Œ íì—ì„œ ë½‘ì•„ë‚´ì§€ëŠ” ì•ŠëŠ”ë‹¤)
+            if(firstItem.gameObject.activeSelf){
+                //í•´ë‹¹ ì•„ì´í…œì´ ì•„ì§ ì‚¬ìš©ì¤‘ì´ë¼ë©´ í ì „ì²´ê°€ ì‚¬ìš©ì¤‘ì¸ê²ƒìœ¼ë¡œ íŒë‹¨í•˜ê³  
+                //ìƒˆë¡­ê²Œ ë§Œë“ ë‹¤.
+                GameObject prefab = prefabDictionary[key];
+                //í”„ë¦¬íŒ¹ì„ ê°€ì ¸ì™€ì„œ
+                GameObject g = GameObject.Instantiate(prefab, firstItem.transform.parent);
+                //ë‹¤ì‹œ ìƒì„±í•˜ê³ 
+                item = g.GetComponent<T>();
+                //ê±°ê¸°ì„œ AfterImage ìŠ¤í¬ë¦½íŠ¸ë§Œ ë½‘ëŠ”ë‹¤.
+            }else {
+                //ê·¸ë ‡ì§€ ì•Šë‹¤ë©´ ì‚¬ìš©ì¤‘ì´ì§€ ì•Šì€ê±°ë‹ˆê¹Œ íì—ì„œ ë¹¼ë‚´ì„œ
+                item = q.Dequeue(); 
+                item.gameObject.SetActive(true);
+                //í™œì„±í™”ë§Œ ì‹œì¼œì¤€ë‹¤.
+            }
+            q.Enqueue(item);
+            //ë‹¤ì‹œ íì˜ ë§¨ ë§ˆì§€ë§‰ìœ¼ë¡œ ë„£ì–´ì¤€ë‹¤.
+        }
 
-	//Á÷·ÄÈ­ÇÏ´Â Å¬·¡½º°¡ Ç®¸Å´ÏÀú ³»ºÎ¿¡ ÀÖ±â¿¡ ¿ÜºÎ¿¡¼­ Á¢±Ù¸øÇÔ
-
-	[SerializeField] Pool[] pools; //Á¤º¸°¡´ã±ä°Í
-	List<GameObject> spawnObjects; //¸ğµç°ÔÀÓ¿ÀºêÁ§Æ®°¡ ´ã±ä°Í
-	Dictionary<string, Queue<GameObject>> poolDictionary; //ÀÌ¸§À¸·Î queue·Î ÀúÀåÇÏ´Â °ÔÀÓ¿ÀºêÁ§Æ®ÇÏ´Â ¹è¿­?±×°Å¸¸µë ¹è¿­¿¡ ¹è¿­ÀÎ°¡?
-	readonly string INFO = " ¿ÀºêÁ§Æ®¿¡ ´ÙÀ½À» ÀûÀ¸¼¼¿ä \nvoid OnDisable()\n{\n" +
-		"    ObjectPooler.ReturnToPool(gameObject);    // ÇÑ °´Ã¼¿¡ ÇÑ¹ø¸¸ \n" +
-		"    CancelInvoke();    // Monobehaviour¿¡ Invoke°¡ ÀÖ´Ù¸é \n}";
-	//const¾²¸é ¿¡·¯³ª°¡Áö°í readonly½áÁÜ
-
-
-	public static GameObject SpawnFromPool(string tag, Vector3 position) =>
-		inst._SpawnFromPool(tag, position, Quaternion.identity);
-
-	public static GameObject SpawnFromPool(string tag, Transform position) =>
-	inst._SpawnFromPool(tag, position, Quaternion.identity);
-	//staticÀÌ¶ó ¾µ¼öÀÖÀ½ ¿ÜºÎ¿¡¼­
-
-	//¿À¹ö·Îµùµé
-	public static GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation) =>
-		inst._SpawnFromPool(tag, position, rotation);
-
-	public static T SpawnFromPool<T>(string tag, Vector3 position) where T : Component {
-		GameObject obj = inst._SpawnFromPool(tag, position, Quaternion.identity);
-		if (obj.TryGetComponent(out T component))
-			return component;
-		else {
-			obj.SetActive(false);
-			throw new Exception($"Component not found");
-		}
-	}
-
-	public static T SpawnFromPool<T>(string tag, Vector3 position, Quaternion rotation) where T : Component {
-		GameObject obj = inst._SpawnFromPool(tag, position, rotation);
-
-		//outÀÌ ¹»±î? component´Â?
-		if (obj.TryGetComponent(out T component))
-			return component;
-		else {
-			obj.SetActive(false);
-			throw new Exception($"Component not found");
-		}
-	}
-
-	public static List<GameObject> GetAllPools(string tag) {
-		if (!inst.poolDictionary.ContainsKey(tag))
-			throw new Exception($"Pool with tag {tag} doesn't exist.");
-
-		return inst.spawnObjects.FindAll(x => x.name == tag); //ºñÈ°¼ºÈ­µÈ°Í±îÁö ,°¡Á®¿È
-	}
-
-	public static List<T> GetAllPools<T>(string tag) where T : Component {
-		List<GameObject> objects = GetAllPools(tag);
-
-		if (!objects[0].TryGetComponent(out T component))
-			throw new Exception("Component not found");
-
-		return objects.ConvertAll(x => x.GetComponent<T>());
-	}
-
-	public static void ReturnToPool(GameObject obj) {
-		if (!inst.poolDictionary.ContainsKey(obj.name))
-			throw new Exception($"Pool with tag {obj.name} doesn't exist.");
-
-		inst.poolDictionary[obj.name].Enqueue(obj); //Queue°ÔÀÓ¿ÀºêÁ§Æ®°¡ ÇÒ´ç
-	}
-
-	[ContextMenu("GetSpawnObjectsInfo")]
-	void GetSpawnObjectsInfo() {
-		foreach (var pool in pools) {
-			int count = spawnObjects.FindAll(x => x.name == pool.tag).Count;
-			Debug.Log($"{pool.tag} count : {count}");
-		}
-	}
-
-	GameObject _SpawnFromPool(string tag, Vector3 position, Quaternion rotation) {
-		if (!poolDictionary.ContainsKey(tag))
-			throw new Exception($"Pool with tag {tag} doesn't exist."); //¿¹¿Ü¸¦ ´øÁ®ÁÖ¸é ±×´ÙÀ½ÀÇ °ÍÀº ½ÇÇà¾ÈÇÔ
-		//Ç®µñ¼Å³Ê¸®¿¡ ÀÌ¸§ÀÌ ÀÖ´Ù´Â °ÍÀº ÇÁ¸®ÆÕ°ú °¹¼ö°¡ ÀÖ´Â°Å´Ï±î
-
-		//µ¶¸³¼ºÀ» À§ÇØ¼­ º¯¼öÇÏ³ª ¸¸µë
-		// Å¥¿¡ ¾øÀ¸¸é »õ·Î Ãß°¡
-		Queue<GameObject> poolQueue = poolDictionary[tag];
-		
-		if (poolQueue.Count <= 0) {
-			//pools¿¡ ÀÌ¸§ÀÌ °°Àº°ÍÀ» 
-			Pool pool = Array.Find(pools, x => x.tag == tag); 
-	
-			var obj = CreateNewObject(pool.tag, pool.prefab);
-			ArrangePool(obj); //¿©±â¿¡ Ãß°¡ÇÏ´Â°Ô ÀÖÀ¸´Ï Ã³À½»ı¼ºÇÒ¶§µµ ÇØÁÜ
-		}
-
-
-		// Å¥¿¡¼­ ²¨³»¼­ »ç¿ë
-		GameObject objectToSpawn = poolQueue.Dequeue();
-		objectToSpawn.transform.position = position;
-		objectToSpawn.transform.rotation = rotation;
-
-		//È°¼ºÈ­Àü¿¡ À§Ä¡¿Í È¸Àü°ªÀ» Àâ¾ÆÁÜ
-		objectToSpawn.SetActive(true);
-
-		return objectToSpawn;
-	}
-
-	GameObject _SpawnFromPool(string tag, Transform position, Quaternion rotation) {
-		if (!poolDictionary.ContainsKey(tag))
-			throw new Exception($"Pool with tag {tag} doesn't exist."); //¿¹¿Ü¸¦ ´øÁ®ÁÖ¸é ±×´ÙÀ½ÀÇ °ÍÀº ½ÇÇà¾ÈÇÔ
-																		//Ç®µñ¼Å³Ê¸®¿¡ ÀÌ¸§ÀÌ ÀÖ´Ù´Â °ÍÀº ÇÁ¸®ÆÕ°ú °¹¼ö°¡ ÀÖ´Â°Å´Ï±î
-
-		//µ¶¸³¼ºÀ» À§ÇØ¼­ º¯¼öÇÏ³ª ¸¸µë
-		// Å¥¿¡ ¾øÀ¸¸é »õ·Î Ãß°¡
-		Queue<GameObject> poolQueue = poolDictionary[tag];
-
-		if (poolQueue.Count <= 0) {
-			//pools¿¡ ÀÌ¸§ÀÌ °°Àº°ÍÀ» 
-			Pool pool = Array.Find(pools, x => x.tag == tag);
-
-			var obj = CreateNewObject(pool.tag, pool.prefab);
-			ArrangePool(obj); //¿©±â¿¡ Ãß°¡ÇÏ´Â°Ô ÀÖÀ¸´Ï Ã³À½»ı¼ºÇÒ¶§µµ ÇØÁÜ
-		}
-
-
-		// Å¥¿¡¼­ ²¨³»¼­ »ç¿ë
-		GameObject objectToSpawn = poolQueue.Dequeue();
-		objectToSpawn.transform.position = position.position;
-		objectToSpawn.transform.rotation = rotation;
-
-		//È°¼ºÈ­Àü¿¡ À§Ä¡¿Í È¸Àü°ªÀ» Àâ¾ÆÁÜ
-		objectToSpawn.SetActive(true);
-
-		return objectToSpawn;
-	}
-
-	public bool isStart = false;
-	void Start() {
-		spawnObjects = new List<GameObject>();
-		poolDictionary = new Dictionary<string, Queue<GameObject>>();
-
-		// ¹Ì¸® »ı¼º
-		foreach (Pool pool in pools) {
-
-			//poolsÅ¬·¡½º¸¦ ÇÏ³ª¾¿ ÆÄÇìÃÄº½
-			//°ÔÀÓ¿ÀºêÁ§Æ®¸¦ »ı¼ºÇÏÀÚ¸¶ÀÚ ÇÒ´çÀÌ µÊ new Queue°¡
-			poolDictionary.Add(pool.tag, new Queue<GameObject>());
-			for (int i = 0; i < pool.size; i++) {
-				//¸®ÅÏÅõ Ç®·Î Queue¿¡ ÇÒ´çÀÌµÊ
-				var obj = CreateNewObject(pool.tag, pool.prefab);
-				ArrangePool(obj);
-			}
-
-			// OnDisable¿¡ ReturnToPool ±¸Çö¿©ºÎ¿Í Áßº¹±¸Çö °Ë»ç
-			if (poolDictionary[pool.tag].Count <= 0)
-				Debug.LogError($"{pool.tag}{INFO}");
-			else if (poolDictionary[pool.tag].Count != pool.size)
-				Debug.LogError($"{pool.tag}¿¡ ReturnToPoolÀÌ Áßº¹µË´Ï´Ù");
-		}
-
-		isStart = true;
-	}
-
-	GameObject CreateNewObject(string tag, GameObject prefab) {
-		var obj = Instantiate(prefab, transform);
-		obj.name = tag;
-		obj.SetActive(false); // ºñÈ°¼ºÈ­½Ã ReturnToPoolÀ» ÇÏ¹Ç·Î Enqueue°¡ µÊ
-		return obj;
-	}
-
-	void ArrangePool(GameObject obj) {
-		// Ãß°¡µÈ ¿ÀºêÁ§Æ® ¹­¾î¼­ Á¤·Ä
-		bool isFind = false;
-		for (int i = 0; i < transform.childCount; i++) {
-			if (i == transform.childCount - 1) {
-				//¸¶Áö¸·ÀÏ‹š 
-				obj.transform.SetSiblingIndex(i);
-				spawnObjects.Insert(i, obj); //¸®½ºÆ®¿¡ ¸î¹øÂ°¿¡´Ù°¡ °ÔÀÓ¿ÀºêÁ§Æ®Ãß°¡ÇÔ
-				break;
-			} else if (transform.GetChild(i).name == obj.name)
-				isFind = true;
-			else if (isFind) {
-				obj.transform.SetSiblingIndex(i);
-				spawnObjects.Insert(i, obj);
-				break;
-			}
-		}
-	}
+        return item;
+    }    
+    
 }

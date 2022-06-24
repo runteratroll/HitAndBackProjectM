@@ -16,11 +16,15 @@ public class DevilBulldogHealth : Health
     protected override void OnDie()
     {
         Debug.Log("죽음");
+
+        SoundManagerM.PlaySound(SoundManagerM.Sound.EnemyDie);
     }
 
     public override void HealthDown(int damage, Vector2 hitPoint, Vector2 normal, float power) //왜 protected는 안될까
     {
         Debug.Log("데미지 받음");
+
+        SoundManagerM.PlaySound(SoundManagerM.Sound.EnemyHit);
         ColorSet();
         player.PlayerSkillsAddUp();
         base.HealthDown(damage, hitPoint, normal, power);

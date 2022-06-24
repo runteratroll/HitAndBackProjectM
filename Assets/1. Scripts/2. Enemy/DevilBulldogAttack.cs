@@ -6,7 +6,9 @@ public class DevilBulldogAttack : EnemyAttack
 {
 
     DevilBulldogAnimation anim;
-    public AttackCollider attackCol; 
+    public AttackCollider attackCol;
+
+
     protected override void Awake()
     {
         base.Awake();
@@ -22,8 +24,16 @@ public class DevilBulldogAttack : EnemyAttack
         anim.SetAttack();
         attackCol.SetAttack(true);
 
+       
     }
 
+
+    public void AttackParticle()
+    {
+        AttackParticle hitParticle = PoolManager.GetItem<AttackParticle>(); //이름도 좋은거 같은데
+        hitParticle.SetRotation(transform.rotation.eulerAngles);
+        hitParticle.Play(transform.position + transform.forward * 2);
+    }
     public void SetAttackDisable()
     {
         attackCol.SetAttack(false);

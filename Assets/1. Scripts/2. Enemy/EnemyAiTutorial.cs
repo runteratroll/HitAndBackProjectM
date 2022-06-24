@@ -31,7 +31,7 @@ public class EnemyAiTutorial : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.Find("Player").transform;
+        player = GameObject.Find("PlayerM").transform;
         agent = GetComponent<NavMeshAgent>();
         attacks = GetComponent<DevilBulldogAttack>();
     }

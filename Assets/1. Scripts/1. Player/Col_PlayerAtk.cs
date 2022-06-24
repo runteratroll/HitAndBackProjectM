@@ -26,6 +26,7 @@ public class Col_PlayerAtk : MonoBehaviour
         //
     }
 
+    
     //공격하면 레이캐스트로 할까
     private void OnTriggerEnter(Collider other)
     {
@@ -40,7 +41,7 @@ public class Col_PlayerAtk : MonoBehaviour
             if(hp != null)
             {
                 Debug.Log("맞음");
-                hp.HealthDown(damageInt, Vector2.zero, Vector2.zero, 0);
+                hp.HealthDown(damageInt, other.transform.position, Vector3.up, 0);
             }
         }
     }

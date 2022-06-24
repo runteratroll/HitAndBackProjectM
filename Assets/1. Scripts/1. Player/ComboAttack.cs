@@ -16,11 +16,29 @@ public class ComboAttack : MonoBehaviour
             Attack();
         }
     }
+
+    public void AttackSound()
+    {
+        if (comboStep == 1)
+        {
+            //SoundManagerM.PlaySound();
+            SoundManagerM.PlaySound(SoundManagerM.Sound.PlayerAttackA);
+        }
+        else if (comboStep == 2)
+        {
+            SoundManagerM.PlaySound(SoundManagerM.Sound.PlayerAttackB);
+        }
+        else if(comboStep == 3)
+        {
+            SoundManagerM.PlaySound(SoundManagerM.Sound.PlayerAttackC);
+        }
+    }
+
     public void Attack()
     {
         if(comboStep == 0)
         {
-            SoundManager.instance.PlaySE("HammerS");
+           
             playerANim.Play("AttackA");//퍼스트 어택
             
             comboStep = 1;
@@ -48,14 +66,14 @@ public class ComboAttack : MonoBehaviour
     {
         if(comboStep == 2)
         {
-            SoundManager.instance.PlaySE("HammerM");
+            //SoundManager.instance.PlaySE("HammerM");
             playerANim.Play("AttackB");
           
 
         }
         if (comboStep == 3)
         {
-            SoundManager.instance.PlaySE("HammerR");
+            //SoundManager.instance.PlaySE("HammerR");
             playerANim.Play("AttackC");
         }
          

@@ -25,7 +25,7 @@ public class Player : MonoBehaviour {
     private LevelSystem levelSystem;
     private LevelSystemAnimated levelSystemAnimated;
     private PlayerSkills playerSkills;
-    private LevelWindow levelWindow;
+
 
     private void Awake() {
         // playerSword = GetComponent<PlayerSword>();
@@ -33,9 +33,7 @@ public class Player : MonoBehaviour {
          levelSystem = new LevelSystem();
         levelSystemAnimated = new LevelSystemAnimated(levelSystem);
         playerSkills = new PlayerSkills();
-        levelWindow = new LevelWindow(); //이거면 이제 설정해주겠지?
-        levelWindow.SetLevelSystem(levelSystem);
-        levelWindow.SetLevelSystemAnimated(levelSystemAnimated);
+       
         playerSkills.OnSkillUnlocked += PlayerSkills_OnSkillUnlocked;
     }
 
@@ -89,14 +87,12 @@ public class Player : MonoBehaviour {
     private void LevelSystemAnimated_OnLevelChanged(object sender, System.EventArgs e) {
         // Level Up
         levelText.SetText((levelSystemAnimated.GetLevelNumber() + 1).ToString());
-        //levelWindow.SetLevelNumber((levelSystemAnimated.GetLevelNumber() + 1));
         //SetHealthAmountMax(8 + levelSystemAnimated.GetLevelNumber());
         //playerSkills.AddSkillPoint();
     }
 
     private void LevelSystemAnimated_OnExperienceChanged(object sender, System.EventArgs e) {
         //experienceBar.SetSize(levelSystemAnimated.GetExperienceNormalized());
-        //levelWindow.SetExperienceBarSize(levelSystemAnimated.GetExperienceNormalized());
     }
 
     private void PlayerSword_OnEnemyKilled(object sender, System.EventArgs e) {
@@ -127,7 +123,7 @@ public class Player : MonoBehaviour {
 
     public void SetAttackSpeed(float setAttackSpeed)
     {
-
+        //플레이어애니메이션 속도 조정
     }
 
 }

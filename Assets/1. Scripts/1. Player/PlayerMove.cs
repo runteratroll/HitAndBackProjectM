@@ -12,7 +12,7 @@ public class PlayerMove : MonoBehaviour
 
     //캐릭터 중력값
     public float verticalSpd;
-    private float gravity = 9.8f;
+    public float gravity = 9.8f;
     [Header("이동관련")]
 
     float speed;
@@ -149,25 +149,36 @@ public class PlayerMove : MonoBehaviour
                    // SoundManager.instance.PlaySE("PlayerGrassWalk");
                 }
 
-                _vecTemp = new Vector3(0f, verticalSpd, 0f);
+                _vecTemp = new Vector3(0f, verticalSpd * Time.deltaTime, 0f);
 
 
-
+                moveAmount.y = 0;
                 moveAmount = (moveDir.normalized * speed * buffSpeed * Time.deltaTime) + _vecTemp;
-
+                
+                 
                 collisionFlags = controllerCharacter.Move(moveAmount);// controllerCharacter.Move(moveAmount * Time.deltaTime); //왜 순간이동 한걸까 //SimpleMove맨
+            } else
+            {
+       
             }
             
         }
         else
         {
-            horizontal = 0;
-            vertical = 0;
+        
             _vecTemp = new Vector3(0f, verticalSpd, 0f);
+            moveAmount.y = 0;
             moveAmount += _vecTemp;
             collisionFlags = controllerCharacter.Move(moveAmount * Time.deltaTime);// controllerCharacter.Move(moveAmount * Time.deltaTime); //왜 순간이동 한걸까 //SimpleMove맨
         }
-        
+        horizontal = 0;
+        vertical = 0;
+
+        //if(horizontal != 0 && vertical != 0)
+        //{
+        //    //SoundManagerM.PlaySound(SoundManagerM.Sound.PlayerMove);
+        //}
+
     }
 
     public void SetHit(Vector3 normal, float power, float delay)
