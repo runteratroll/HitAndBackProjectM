@@ -33,7 +33,7 @@ public class ChargedTime : MonoBehaviour
         GUIStyle gUIStyle = new GUIStyle();
         gUIStyle.normal.textColor = Color.black;
         gUIStyle.fontSize = 50;
-        GUI.Label(new Rect(20, 20, 500, 200), timer.ToString(), gUIStyle);
+        GUI.Label(new Rect(20, 20, 800, 500), timer.ToString(), gUIStyle);
     }
     public void Attack(InputAction.CallbackContext context)
     {

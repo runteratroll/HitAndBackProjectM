@@ -13,6 +13,7 @@ public class ComboAttack : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
+            Debug.Log("°ø°Ý ¿ÞÂÊ¸¶¿ì½ºÅ¬¸¯");
             Attack();
         }
     }
@@ -58,12 +59,14 @@ public class ComboAttack : MonoBehaviour
 
     public void ComboPossible()
     {
+        Debug.Log("ÄÞº¸ÆÄ½Ãºí");
         comboPossible = true;
 
     }
 
     public void Combo()
     {
+        Debug.Log("ÄÞº¸");
         if(comboStep == 2)
         {
             //SoundManager.instance.PlaySE("HammerM");
@@ -82,6 +85,7 @@ public class ComboAttack : MonoBehaviour
 
     public void Comboreset()
     {
+        Debug.Log("ÄÞº¸¸®¼Â");
         comboPossible = false;
         comboStep = 0;
     }

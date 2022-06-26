@@ -26,17 +26,33 @@ public class Col_PlayerAtk : MonoBehaviour
         //
     }
 
+    //이함수가 끝나면 이함수 실행하기
+
+
+    void enmeyCriticalZone()
+    {
+        //몬스터에 크리티컬을 받아야하는데 
+
+    }
     
     //공격하면 레이캐스트로 할까
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) 
     {
-        if(other.CompareTag("HitBox_Enemy"))
+
+
+        HitEnemy(other);
+    }
+
+
+    void HitEnemy(Collider other)
+    {
+         if(other.CompareTag("HitBox_Enemy"))
         {
             //Debug.Log("뜨냐?");
             damgeType = string.Format("{0} + {1}", type_Atk, comboStep);
             dmgText.text = damgeType;
             dmgText.gameObject.SetActive(true);
-
+            //코루틴으로 받아로면 여길실행되게 만들어야지
             IDamageble hp = other.GetComponent<IDamageble>();
             if(hp != null)
             {

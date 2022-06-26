@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - HitBox_Enemy
+  - AICars
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - IsGround
   - Player
   - Enemy
-  - 
+  - PlayerWeapon
   - 
   - 
   - 

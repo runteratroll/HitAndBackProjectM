@@ -93,13 +93,14 @@ public class PlayerMove : MonoBehaviour
             case PlayerState.None:
                 break;
             case PlayerState.Idle:
+                playerAnimation.SetWalkRun(false, false);
                 break;
             case PlayerState.Walk:
-                playerAnimation.SetRun(false);
+                playerAnimation.SetWalkRun(false , true);
                 break;
             case PlayerState.Run:
                
-                    playerAnimation.SetRun(true);
+                    playerAnimation.SetWalkRun(true , false);
                 
                 break;
             case PlayerState.Attack:
@@ -116,6 +117,8 @@ public class PlayerMove : MonoBehaviour
         buffSpeed *= setSpeed;
     }
 
+  
+    
     private void SetMove()
     {
         if (stopMove == false)
@@ -123,6 +126,11 @@ public class PlayerMove : MonoBehaviour
             Debug.Log("흐흐");
             horizontal = Input.GetAxisRaw("Horizontal");
             vertical = Input.GetAxisRaw("Vertical");
+
+            if (horizontal == 0 && vertical == 0)
+            {
+                state = PlayerState.Idle;
+            }
             Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
             if (direction.magnitude >= 0.1f)
@@ -136,6 +144,8 @@ public class PlayerMove : MonoBehaviour
                 // 프레임 이동 양
                 speed = walkMoveSpd;
 
+                
+                
                 if (Input.GetKey(KeyCode.Space))
                 {
                     speed = runMoveSpd;
@@ -148,6 +158,8 @@ public class PlayerMove : MonoBehaviour
                     state = PlayerState.Walk;
                    // SoundManager.instance.PlaySE("PlayerGrassWalk");
                 }
+
+              
 
                 _vecTemp = new Vector3(0f, verticalSpd * Time.deltaTime, 0f);
 
@@ -173,6 +185,8 @@ public class PlayerMove : MonoBehaviour
         }
         horizontal = 0;
         vertical = 0;
+      
+
 
         //if(horizontal != 0 && vertical != 0)
         //{
@@ -183,16 +197,19 @@ public class PlayerMove : MonoBehaviour
 
     public void SetHit(Vector3 normal, float power, float delay)
     {
+        playerAnimation.SetDamage(true);
         stopMove = true;
         moveAmount = -normal * power + new Vector3(0, 2f);
 
         StartCoroutine(RecoverProcess(delay));
+
     }
 
     IEnumerator RecoverProcess(float delay)
     {
 
         yield return new WaitForSeconds(delay);
+        playerAnimation.SetDamage(false);
         stopMove = false;
     }
 
@@ -221,7 +238,7 @@ public class PlayerMove : MonoBehaviour
         
         if ((collisionFlags == CollisionFlags.None))
         {
-            Debug.Log("중력 값 적용");
+          
 
             verticalSpd -= gravity * Time.deltaTime;//여기에서 이제 뭐뭐를 
 

@@ -8,11 +8,13 @@ public class PlayerHealth : Health
     public float damageDelay;
     public HealthBar healthBar;
     PlayerMove playerMove;
+    //이펙트시스템도 만들어야 하는데
 
     public float delay;
     private void Awake()
     {
         playerMove = GetComponent<PlayerMove>();
+ 
         lastDamageTime = Time.time;
     }
     public override void HealthDown(int damage, Vector2 hitPoint, Vector2 normal, float power = 1f)
@@ -25,6 +27,7 @@ public class PlayerHealth : Health
         //여기에서 이제 날라가는 함수를
 
         playerMove.SetHit(normal, power, delay);
+        
         healthBar.SetHealth((float)currentHp / (float)maxHp);
 
     }
