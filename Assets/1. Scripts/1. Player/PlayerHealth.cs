@@ -57,7 +57,7 @@ public class PlayerHealth : Health
         
    
         playerAnimation.SetDead(true);
-        Invoke("StopSet", 1f);
+        gameObject.tag = "Enemy";
 
         //여기에 이제 플레이어죽음애니메이션, 효과음, 이펙트 ,
     }
@@ -68,15 +68,10 @@ public class PlayerHealth : Health
         healthBar.SetHealth(maxHp);
         playerAnimation.SetDead(false);
         playerMove.SetStopMove(false);
-
-        gameObject.tag = "Enemy";
-    }
-
-
-    public void StopSet()
-    {
         currentHp = maxHp;
-        //playerMove.SetStopMove(false);
         gameObject.tag = "Player";
     }
+
+
+ 
 }
