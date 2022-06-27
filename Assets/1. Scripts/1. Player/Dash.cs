@@ -8,6 +8,8 @@ namespace CreatringCharacters.Abilities
         [SerializeField] private float dashForce;
         [SerializeField] private float dashDuration;
 
+
+        public ParticleSystem particle;
         private CharacterController cC;
         public Player player;
 
@@ -46,7 +48,7 @@ namespace CreatringCharacters.Abilities
             isTrue = true;
             gameObject.SendMessage("SetStopMove", isTrue);
             //Camera.main.transform.forward * dashForce, ForceMode.VelocityChange);'
-
+            particle.Play();
 
             yield return new WaitForSeconds(dashDuration);
 

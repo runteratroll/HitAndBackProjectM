@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class UIPop : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    bool isPop  = true;
+    int count = 0;
 
-    // Update is called once per frame
-    void Update()
+
+    public void SetActiveObj(GameObject SkillTree)
     {
-        
+        count++;
+        count = count % 2; //1 이면 1 2이면 0 
+  
+        isPop = count == 0 ? true : false;
+
+        if(isPop == true)
+        {
+
+        }
+
+        SkillTree.SetActive(isPop);
+       
     }
 }

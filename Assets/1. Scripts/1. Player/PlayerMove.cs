@@ -177,7 +177,9 @@ public class PlayerMove : MonoBehaviour
         }
         else
         {
-        
+            horizontal = 0;
+            vertical = 0;
+            //À¯Àú
             _vecTemp = new Vector3(0f, verticalSpd, 0f);
             moveAmount.y = 0;
             moveAmount += _vecTemp;

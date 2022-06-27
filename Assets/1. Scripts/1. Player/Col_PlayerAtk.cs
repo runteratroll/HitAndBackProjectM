@@ -14,8 +14,10 @@ public class Col_PlayerAtk : MonoBehaviour
     //public int dmg; //스트링으로 변환해야겠다.
     public TextMeshProUGUI dmgText;
 
+    public bool isSmash;
     private void OnEnable()
     {
+       
         comboStep = combo.comboStep; //활성화 될떄마다
         //damageInt = int.Parse(damgeType);
 
@@ -23,7 +25,7 @@ public class Col_PlayerAtk : MonoBehaviour
 
     private void Start()
     {
-        //
+        
     }
 
     //이함수가 끝나면 이함수 실행하기
@@ -48,8 +50,11 @@ public class Col_PlayerAtk : MonoBehaviour
     {
          if(other.CompareTag("HitBox_Enemy"))
         {
+
+            //데미지랑 텍스트랑 연동되게
             //Debug.Log("뜨냐?");
-            damgeType = string.Format("{0} + {1}", type_Atk, comboStep);
+            //함수애니메이션에서 콤보마다 인트를 해가지고 여기서 인트를 받아가지고 여기다가 넣기
+            damgeType = string.Format("{0} + {1}", type_Atk, comboStep); // damageInt 
             dmgText.text = damgeType;
             dmgText.gameObject.SetActive(true);
             //코루틴으로 받아로면 여길실행되게 만들어야지

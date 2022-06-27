@@ -10,7 +10,7 @@ public class DevilBulldogHealth : Health
     private void Awake()
     {
         skinnedMeshRenderer = GetComponentInParent<SkinnedMeshRenderer>();
-       // healthBar.SetMaxHealth(maxHp);
+        // healthBar.SetMaxHealth(maxHp);
 
     }
     protected override void OnDie()
@@ -18,31 +18,53 @@ public class DevilBulldogHealth : Health
         Debug.Log("죽음");
 
         SoundManagerM.PlaySound(SoundManagerM.Sound.EnemyDie);
+        gameObject.SetActive(false);
     }
 
+    bool isMad;
     public override void HealthDown(int damage, Vector2 hitPoint, Vector2 normal, float power) //왜 protected는 안될까
     {
         Debug.Log("데미지 받음");
 
-        SoundManagerM.PlaySound(SoundManagerM.Sound.EnemyHit);
-        ColorSet();
-        player.PlayerSkillsAddUp();
-        base.HealthDown(damage, hitPoint, normal, power);
-        healthBar.SetHealth((float)currentHp / (float)maxHp);
 
-
-    }
-
-    IEnumerator ColorSet()
-    {
-        Debug.Log("실행되니?");
-        for (int i = 0; i < 4; i++)
+        if (currentHp <= maxHp / 2)
         {
-            skinnedMeshRenderer.material.color = Color.white;
-            yield return new WaitForSeconds(0.2f);
-            skinnedMeshRenderer.material.color = Color.red;
+
+            if (isMad == false)
+            {
+
+                MadState madState = gameObject.GetComponentInParent<MadState>();
+
+                if (madState != null)
+                {
+                    isMad = true;
+                    Debug.Log("적이 화났습니다.");
+                    madState.MadM();
+                }
+            }
         }
-       
+
+            SoundManagerM.PlaySound(SoundManagerM.Sound.EnemyHit);
+            ColorSet();
+            player.PlayerSkillsAddUp();
+
+            base.HealthDown(damage, hitPoint, normal, power);
+            healthBar.SetHealth((float)currentHp / (float)maxHp);
+
+
+        
     }
 
-}
+        IEnumerator ColorSet()
+        {
+            Debug.Log("실행되니?");
+            for (int i = 0; i < 4; i++)
+            {
+                skinnedMeshRenderer.material.color = Color.white;
+                yield return new WaitForSeconds(0.2f);
+                skinnedMeshRenderer.material.color = Color.red;
+            }
+
+        }
+
+    }

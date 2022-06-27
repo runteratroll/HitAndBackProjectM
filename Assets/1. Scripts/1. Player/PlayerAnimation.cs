@@ -43,10 +43,10 @@ public class PlayerAnimation : MonoBehaviour
         anim.SetBool(hashDamage, isDamage);
     }
 
-    public void SetDead()
+    public void SetDead(bool isDead)
     {
 
-        anim.SetBool(hashDead, true);
+        anim.SetBool(hashDead, isDead);
     }
 
     public void SetCharge(bool isCharge)

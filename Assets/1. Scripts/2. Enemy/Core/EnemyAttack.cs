@@ -9,6 +9,7 @@ public abstract class EnemyAttack : MonoBehaviour
     protected float lastAttackTime = 0;
     public bool isAttack = false; //모든오브젝트마다 몸통데미지가 있지 않을까
     public int damage;
+
     protected virtual void Awake()
     {
         lastAttackTime = Time.time;

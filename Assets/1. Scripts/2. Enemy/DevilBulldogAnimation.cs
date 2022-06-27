@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class DevilBulldogAnimation : MonoBehaviour
 {
-    Animator anim;
+    public Animator anim;
 
     private readonly int hashAttack = Animator.StringToHash("Attack");
+    private readonly int hashScale = Animator.StringToHash("isMad");
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
 
+    }
+
+    public void SetMad(bool isMad)
+    {
+        anim.SetBool(hashScale, isMad);
     }
 
     public void SetAttack()

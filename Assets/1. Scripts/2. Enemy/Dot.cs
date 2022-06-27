@@ -35,6 +35,8 @@ public class Dot : MonoBehaviour
         else if(dot  < 0)
         {
             isForward = false;
+            //isForwar가 펄스일떄 떄리면 성공
+            //플레이어가 떄렸다는 신호를 전달하는 이벤트함수를 만들어서 적재적소에 사용할 수 있지 않을까?
         }
     }
 }
