@@ -99,7 +99,7 @@ public class PlayerMove : MonoBehaviour
                 playerAnimation.SetWalkRun(false , true);
                 break;
             case PlayerState.Run:
-               
+                Debug.Log("·±");
                     playerAnimation.SetWalkRun(true , false);
                 
                 break;

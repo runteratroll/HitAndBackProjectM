@@ -7,6 +7,7 @@ public class DevilBulldogHealth : Health
     SkinnedMeshRenderer skinnedMeshRenderer;
     public Player player;
     public HealthBar healthBar;
+    public GameObject Devil;
     private void Awake()
     {
         skinnedMeshRenderer = GetComponentInParent<SkinnedMeshRenderer>();
@@ -18,7 +19,7 @@ public class DevilBulldogHealth : Health
         Debug.Log("Á×À½");
 
         SoundManagerM.PlaySound(SoundManagerM.Sound.EnemyDie);
-        gameObject.SetActive(false);
+        Devil.SetActive(false);
     }
 
     bool isMad;

@@ -55,7 +55,7 @@ public class ChargedTime : MonoBehaviour
         
         if (context.canceled) //누르는게 아니라 시간이지나면 자동으로 때지게
         {
-            if (timer < 1.5f)
+            if (timer < 1.2f)
             {
                 //그냥 공격
             }
