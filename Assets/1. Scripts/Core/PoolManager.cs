@@ -7,6 +7,8 @@ public class PoolManager
     public static Dictionary<string, object> pool = new Dictionary<string, object>();
     public static Dictionary<string, GameObject> prefabDictionary = new Dictionary<string, GameObject>();
 
+
+
     //풀을 하나 새로 만드는 함수 AfterImage, Bullet, Projectile
     public static void CreatePool<T>(GameObject prefab, Transform parent, int count = 5)
     {

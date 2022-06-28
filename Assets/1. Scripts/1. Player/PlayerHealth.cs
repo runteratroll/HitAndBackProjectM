@@ -65,9 +65,11 @@ public class PlayerHealth : Health
 
     public void HealthMax()
     {
+
+        SceneManager.LoadScene("SampleScene");
         healthBar.SetHealth(maxHp);
         playerAnimation.SetDead(false);
-        playerMove.SetStopMove(false);
+        playerMove.SetStopMove(true);
         currentHp = maxHp;
         gameObject.tag = "Player";
     }

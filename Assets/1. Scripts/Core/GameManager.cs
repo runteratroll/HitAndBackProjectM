@@ -53,26 +53,27 @@ public class GameManager : MonoBehaviour
     {
         
 
-        SoundManagerM.Initialize();
 
-        if(instance != null)
+
+        if(instance == null)
         {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
 
-        }
-
-        instance = this;
-    }
-
-
-    private void OnEnable()
-    {
-        if (PoolManager.pool.Count == 0)
-        {
             Debug.Log("풀매니저");
             PoolManager.CreatePool<BloodParticle>(bloodParticlePrefab, transform, 10);
             PoolManager.CreatePool<AttackParticle>(attackParticlPrefab, transform, 10);
+            SoundManagerM.Initialize();
+
+
         }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
     }
+
 
 
 
