@@ -25,6 +25,11 @@ public class WaveSpawner : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        Spawen();
+    }
+
+    public void Spawen()
+    {
         if (spawnTimer <= 0)
         {
             //spawn an enemy

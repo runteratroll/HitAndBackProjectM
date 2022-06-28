@@ -177,8 +177,6 @@ public class PlayerMove : MonoBehaviour
         }
         else
         {
-            horizontal = 0;
-            vertical = 0;
             //À¯Àú
             _vecTemp = new Vector3(0f, verticalSpd, 0f);
             moveAmount.y = 0;
@@ -187,7 +185,11 @@ public class PlayerMove : MonoBehaviour
         }
         horizontal = 0;
         vertical = 0;
-      
+        moveAmount.z = 0;
+        moveAmount.x = 0;
+        collisionFlags = controllerCharacter.Move(moveAmount * Time.deltaTime);
+
+
 
 
         //if(horizontal != 0 && vertical != 0)

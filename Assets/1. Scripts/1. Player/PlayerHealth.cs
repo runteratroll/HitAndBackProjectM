@@ -71,7 +71,7 @@ public class PlayerHealth : Health
     public void HealthMax()
     {
 
-        SceneManager.LoadScene("SampleScene");
+        Loader.Load(Loader.Scene.Dead);
         healthBar.SetHealth(maxHp);
         playerAnimation.SetDead(false);
         playerMove.SetStopMove(true);

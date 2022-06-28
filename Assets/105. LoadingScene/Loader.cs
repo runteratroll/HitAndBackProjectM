@@ -12,6 +12,7 @@ public static class Loader {
         SampleScene,
         Loading,
         MainMenu,
+        Dead,
     }
 
     private static Action onLoaderCallback;

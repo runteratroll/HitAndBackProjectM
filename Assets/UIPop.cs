@@ -23,4 +23,9 @@ public class UIPop : MonoBehaviour
         SkillTree.SetActive(isPop);
        
     }
+
+
+
+
+    
 }
