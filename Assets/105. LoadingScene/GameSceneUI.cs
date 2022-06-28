@@ -6,9 +6,14 @@ using CodeMonkey.Utils;
 public class GameSceneUI : MonoBehaviour {
 
     private void Awake() {
-        transform.Find("mainMenuBtn").GetComponent<Button_UI>().ClickFunc = () => {
+        transform.Find("Start").GetComponent<Button_UI>().ClickFunc = () => {
             Debug.Log("Click Main Menu");
-            Loader.Load(Loader.Scene.MainMenu);
+            Loader.Load(Loader.Scene.SampleScene);
+        };
+
+        transform.Find("End").GetComponent<Button_UI>().ClickFunc = () =>
+        {
+            Application.Quit();   
         };
     }
 

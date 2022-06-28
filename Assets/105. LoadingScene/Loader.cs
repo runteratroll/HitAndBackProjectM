@@ -9,13 +9,16 @@ public static class Loader {
     private class LoadingMonoBehaviour : MonoBehaviour { }
 
     public enum Scene {
-        GameScene,
+        SampleScene,
         Loading,
         MainMenu,
     }
 
     private static Action onLoaderCallback;
     private static AsyncOperation loadingAsyncOperation;
+
+    //그리고 Action진짜 많이 사용하는 함수구나
+    //이벤트나 ScriptOBject합쳐서
 
     public static void Load(Scene scene) {
         // Set the loader callback action to load the target scene
