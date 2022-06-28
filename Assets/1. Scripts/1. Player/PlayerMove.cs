@@ -171,7 +171,7 @@ public class PlayerMove : MonoBehaviour
                 collisionFlags = controllerCharacter.Move(moveAmount);// controllerCharacter.Move(moveAmount * Time.deltaTime); //왜 순간이동 한걸까 //SimpleMove맨
             } else
             {
-       
+                stopMove = false;
             }
             
         }
@@ -181,13 +181,14 @@ public class PlayerMove : MonoBehaviour
             _vecTemp = new Vector3(0f, verticalSpd, 0f);
             moveAmount.y = 0;
             moveAmount += _vecTemp;
+            
             collisionFlags = controllerCharacter.Move(moveAmount * Time.deltaTime);// controllerCharacter.Move(moveAmount * Time.deltaTime); //왜 순간이동 한걸까 //SimpleMove맨
         }
+
+       
         horizontal = 0;
         vertical = 0;
-        moveAmount.z = 0;
-        moveAmount.x = 0;
-        collisionFlags = controllerCharacter.Move(moveAmount * Time.deltaTime);
+
 
 
 
