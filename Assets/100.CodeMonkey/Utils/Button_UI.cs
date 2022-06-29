@@ -1,17 +1,4 @@
-﻿/* 
-    ------------------- Code Monkey -------------------
-
-    Thank you for downloading the Code Monkey Utilities
-    I hope you find them useful in your projects
-    If you have any questions use the contact form
-    Cheers!
-
-               unitycodemonkey.com
-    --------------------------------------------------
- */
- 
-//#define SOUND_MANAGER // Has Sound_Manager in project
-//#define CURSOR_MANAGER // Has Cursor_Manager in project
+﻿
 
 using System;
 using UnityEngine;
@@ -24,7 +11,9 @@ namespace CodeMonkey.Utils {
      * Button in the UI
      * */
     public class Button_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler {
-
+        
+        //아 빈곳을 클릭하면 되는 핸들러가 있겠지? static
+        //진짜로 액션을 쓰잖아?!!!!!!!
         public Action ClickFunc = null;
         public Action MouseRightClickFunc = null;
         public Action MouseMiddleClickFunc = null;
@@ -88,6 +77,7 @@ namespace CodeMonkey.Utils {
             mouseOver = false;
         }
 
+        //포인터 핸들러  
         public virtual void OnPointerClick(PointerEventData eventData) {
             if (internalOnPointerClickFunc != null) internalOnPointerClickFunc();
             if (OnPointerClickFunc != null) OnPointerClickFunc(eventData);
@@ -95,7 +85,7 @@ namespace CodeMonkey.Utils {
                 if (triggerMouseOutFuncOnClick) {
                     OnPointerExit(eventData);
                 }
-                if (ClickFunc != null) ClickFunc();
+                if (ClickFunc != null) ClickFunc(); //클릭펀스가 실행되는데 저런 함수가 실행되는구나
             }
             if (eventData.button == PointerEventData.InputButton.Right)
                 if (MouseRightClickFunc != null) MouseRightClickFunc();

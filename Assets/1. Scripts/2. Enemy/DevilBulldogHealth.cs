@@ -8,11 +8,17 @@ public class DevilBulldogHealth : Health
     public Player player;
     public HealthBar healthBar;
     public GameObject Devil;
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         skinnedMeshRenderer = GetComponentInParent<SkinnedMeshRenderer>();
         // healthBar.SetMaxHealth(maxHp);
 
+    }
+
+    private void Start()
+    {
+        healthBar.SetHealth((float)currentHp / (float)maxHp);
     }
     protected override void OnDie()
     {

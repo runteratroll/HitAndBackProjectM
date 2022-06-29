@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyMad : Mad
 {
+
+    //이걸 이제 이벤트프로그래밍을 한다면은?
     public DevilBulldogAnimation animation;
 
     public override void FirstState()
@@ -22,7 +24,6 @@ public class EnemyMad : Mad
         Agent.speed = EnemyMadStateScriptAble.Speed;
         Debug.Log("매드");
         animation.anim.speed = 1.5f;
-        //transform.localScale = new Vector3(5f, 5f, 5f);
 
     }
 

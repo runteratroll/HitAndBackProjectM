@@ -7,19 +7,28 @@ public class PlayerHealth : Health
 {
     private float lastDamageTime;
     public float damageDelay;
-    public HealthBar healthBar;
+    //static으로 해주고
+    //스태틱 헬스를 해주고 
+
+    public HealthBar healthBar; //헬스바다운을 이제 public이 아닌! 
     PlayerMove playerMove;
     PlayerAnimation playerAnimation;
     SkinnedMeshRenderer[] skinnedMeshRenderer;
     //이펙트시스템도 만들어야 하는데
 
     public float delay;
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         playerMove = GetComponent<PlayerMove>();
         playerAnimation = GetComponent<PlayerAnimation>();
         lastDamageTime = Time.time;
         skinnedMeshRenderer = GetComponentsInChildren<SkinnedMeshRenderer>();
+    }
+
+    private void Start()
+    {
+        healthBar.SetHealth((float)currentHp / (float)maxHp);
     }
     public override void HealthDown(int damage, Vector2 hitPoint, Vector2 normal, float power = 1f)
     {

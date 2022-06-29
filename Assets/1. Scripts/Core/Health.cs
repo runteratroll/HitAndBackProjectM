@@ -10,9 +10,10 @@ public abstract class Health : MonoBehaviour, IDamageble
     public int maxHp;
 
     public Color hitColor;
-    private void Start()
+    protected virtual void Awake()
     {
         currentHp = maxHp;
+
     }
     public virtual void HealthDown(int damage, Vector2 hitPoint, Vector2 normal, float power) //왜 protected는 안될까
     {
