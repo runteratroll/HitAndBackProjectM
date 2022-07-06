@@ -9,7 +9,7 @@ public class PlayerMove : MonoBehaviour
     [Header("이동버프")]
     public float buffSpeed = 1;
 
-
+    public Quest quest;
     //캐릭터 중력값
     public float verticalSpd;
     public float gravity = 9.8f;
